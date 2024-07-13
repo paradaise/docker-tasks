@@ -1,0 +1,38 @@
+version: "3"
+
+services:
+nginx:
+container_name: nginx
+image: nginx
+ports:
+- "80:80"
+networks:
+- example_network
+
+whoami1:
+container_name: whoami1
+image: traefik/whoami:v1.10.2
+command:
+- —port=19386
+networks:
+- example_network
+
+whoami2:
+container_name: whoami2
+command:
+- —port=19386
+image: traefik/whoami:v1.10.2
+networks:
+- example_network
+
+whoami3:
+container_name: whoami3
+command:
+- —port=19386
+image: traefik/whoami:v1.10.2
+networks:
+- example_network
+
+networks:
+example_network:
+driver: bridge

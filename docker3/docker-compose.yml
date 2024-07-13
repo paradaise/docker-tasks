@@ -1,0 +1,37 @@
+version: "3"
+
+services:
+  nginx:
+    container_name: nginx
+    ports:
+      - "80:80"
+    image: nginx
+    command: ["sh", "-c", "apt-get update && apt-get install -y nano && nginx -g 'daemon off;'"]
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+
+  app1:
+    container_name: app1
+    environment:
+      - PORT=8001
+      - IP_ADDRESS=172.17.0.1
+    network_mode: "host"
+    image:  nexus:9003/server:v1
+
+
+  app2:
+    container_name: app2
+    environment:
+      - PORT=8002
+      - IP_ADDRESS=172.17.0.1
+
+    network_mode: "host"
+    image:  nexus:9003/server:v1
+
+  app3:
+    container_name: app3
+    environment:
+      - IP_ADDRESS=172.17.0.1
+      - PORT=8003
+    network_mode: "host"
+    image:  nexus:9003/server:v1
